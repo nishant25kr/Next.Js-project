@@ -1,4 +1,3 @@
-import { promises } from "dns"
 import mongoose from "mongoose";
 
 type ConnectionObject = {
@@ -20,7 +19,7 @@ async function dbconnect(): Promise<void> {
 
         connection.isConnected = DB.connections[0].readyState
 
-        console.log(DB)
+        // console.log(DB)
         console.log(DB.connection)
 
         console.log("DB connected successfully")
