@@ -9,10 +9,15 @@ export async function POST(request: Request) {
     try {
 
         const { username, code } = await request.json()
+        // console.log(username)
+        // console.log(code)
 
         const decodedUsername = decodeURIComponent(username)
+        // console.log(decodedUsername)
 
-        const user = await UserModel.findOne({ username: decodedUsername })
+        const user = await UserModel.findOne({ username:decodedUsername })
+        // console.log("hi2")
+        // console.log(user)
 
         if (!user) {
             return Response.json(
@@ -50,10 +55,6 @@ export async function POST(request: Request) {
             )
 
         }
-
-        
-
-
 
     } catch (error) {
         console.log("Error in varifying code", error)
