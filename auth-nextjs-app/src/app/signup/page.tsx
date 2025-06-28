@@ -51,7 +51,7 @@ export default function SignUp() {
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           {loding ? "Processing " : "SignUp"}
         </h1>
-        <hr className="mb-6 border-gray-300" />
+        <hr className="mb-6 border-gray-300 " />
 
         <div className="mb-4">
           <label
