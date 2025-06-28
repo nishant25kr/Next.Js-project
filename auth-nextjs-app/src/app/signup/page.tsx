@@ -1,23 +1,55 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { axios } from "axios";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function SignUp() {
+  const router = useRouter();
   const [user, setuser] = React.useState({
     username: "",
     email: "",
     password: "",
   });
 
-  const onSignUp = async () => {};
+  const [buttonDisabled, setbuttonDisabled] = React.useState(false);
+
+  const [loding, setloding] = React.useState(false);
+
+  const onSignUp = async () => {
+    try {
+      setloding(true);
+      const response = await axios.post("/api/users/signup", user);
+      console.log("SignUp success",response.data);
+      router.push("/login")
+      
+    } catch (error: any) {
+      console.log("Signup failed", error);
+      toast.error(error.message);
+      
+    } finally {
+      setloding(false);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      user.email.length > 0 &&
+      user.password.length > 0 &&
+      user.username.length > 0
+    ) {
+      setbuttonDisabled(false);
+    } else {
+      setbuttonDisabled(true);
+    }
+  }, [user]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen  px-4 py-8">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-8">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Sign Up
+          {loding ? "Processing " : "SignUp"}
         </h1>
         <hr className="mb-6 border-gray-300" />
 
@@ -72,10 +104,15 @@ export default function SignUp() {
           />
         </div>
 
-        <button onClick={onSignUp} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
-          Sign Up
+        <button
+          onClick={onSignUp}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
+        >
+          {buttonDisabled ? "No signup" : "SignUp"}
         </button>
-        <Link href="/login" className="text-black">Login Page</Link>
+        <Link href="/login" className="text-black">
+          Login Page
+        </Link>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 
-const userSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
     username:{
         type:String,
         required:true,
@@ -31,6 +31,4 @@ const userSchema = mongoose.Schema({
 
 },{timeStamp:true})
 
-const User = mongoose.model.users || mongoose.model("User",userSchema);
-
-export default User;
+export default mongoose.models.User || mongoose.model('User', UserSchema);
