@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
         const reqbody = await request.json()
         const { username, email, password } = reqbody
-        console.log(reqbody)
+        // console.log(reqbody)
         const existUser = await User.findOne({ email })
 
         if (existUser) {
@@ -40,10 +40,11 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        console.log(savedUser);
+        // console.log(savedUser);
+        console.log("Before sendmail")
 
         //sending verification email
-        // await sendEmail({email, emailtype: "VERIFY", userId: savedUser._id});
+        await sendEmail({email, emailtype: "VERIFY", userId: savedUser._id});
 
 
         return NextResponse.json(
